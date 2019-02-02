@@ -7,10 +7,10 @@ cd lib
 python setup.py build_ext --inplace
 ```
 
-othro.py is GUI othero application. To play this, you need following libraries.
+othero.py is GUI othero application. To play this, you need following libraries.
 
 
-numpy 
-cython 
-pytorch 
-tkinter 
+numpy  
+cython  
+pytorch  
+tkinter
