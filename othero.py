@@ -27,7 +27,7 @@ class app(ttk.Frame):
         self.n_mcts = 320
 
         self.model = model.Net(model.OBS_SHAPE, game.BOARD_SIZE ** 2 + 1)
-        self.save_dir = "saves/mcts_800/"
+        self.save_dir = "saves/mcts_800_with_gamma/"
         self.model_name = os.path.basename(sorted(glob(self.save_dir + "*.dat"))[-1])
         fname = self.save_dir + self.model_name
         self.model.load_state_dict(torch.load(fname,
@@ -68,6 +68,8 @@ class app(ttk.Frame):
                   textvariable=self.stone_vars[1],
                   font=LARGE_FONT).grid(column=10, row=5)
 
+        self.make_board()
+
     def make_menu(self, master):
         menu_ROOT = tk.Menu(master)
         master.configure(menu=menu_ROOT)
@@ -99,10 +101,12 @@ class app(ttk.Frame):
         self.stone_vars[0].set(num_black)
         self.stone_vars[1].set(num_white)
 
-    def update_board(self):
+    def make_board(self):
+        self.state = game_c.INITIAL_STATE
         colors = self.__state_to_colors()
         self.buttons = []
         for i in range(game.BOARD_SIZE):
+            self.buttons.append([])
             for j in range(game.BOARD_SIZE):
                 button = tk.Button(
                     self,
@@ -112,7 +116,14 @@ class app(ttk.Frame):
                     command=lambda i=i, j=j: self.on_click(j, i),
                     text='●')
                 button.grid(row=i+1, column=j+1)
-                self.buttons.append((i, j, button))
+                self.buttons[i].append(button)
+        self.update_count()
+
+    def update_board(self):
+        colors = self.__state_to_colors()
+        for i in range(game.BOARD_SIZE):
+            for j in range(game.BOARD_SIZE):
+                self.buttons[i][j].config(fg=colors[i][j])
         self.update_count()
 
     def __state_to_colors(self):
