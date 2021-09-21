@@ -24,13 +24,13 @@ PLAYER_WHITE = 1
 #    return res
 #
 #
-#def pos_tuple_to_int(pos):
-#    assert isinstance(pos, tuple)
-#    assert isinstance(pos[0], int)
-#    assert isinstance(pos[1], int)
-#    assert 0 <= pos[0] < BOARD_SIZE
-#    assert 0 <= pos[1] < BOARD_SIZE
-#    return pos[0] + pos[1] * BOARD_SIZE
+def pos_tuple_to_int(pos):
+    assert isinstance(pos, tuple)
+    assert isinstance(pos[0], int)
+    assert isinstance(pos[1], int)
+    assert 0 <= pos[0] < BOARD_SIZE
+    assert 0 <= pos[1] < BOARD_SIZE
+    return pos[0] + pos[1] * BOARD_SIZE
 #
 #
 #def encode_list(field_list, player):
